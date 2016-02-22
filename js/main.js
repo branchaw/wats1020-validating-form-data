@@ -28,8 +28,8 @@ $(document).on('ready', function(){
         required: true,
         maxlength: 2,
         minlength: 2,
-        lettersonly: true
-        //TODO: stretch check state abbrev
+        lettersonly: true,
+        stateUS: true
       },
       "your-zip": {
         required: true,
@@ -49,6 +49,9 @@ $(document).on('ready', function(){
       "expiry-month": {
         required: true
       },
+			"expiry-year": {
+				required: true
+			},
       "cvv": {
         required: true,
         maxlength: 3,
@@ -78,9 +81,35 @@ $(document).on('ready', function(){
     
   });
   
- $.validator.addMethod( "lettersonly", function( value, element ) {
-  return this.optional( element ) || /^[a-z]+$/i.test( value );
- }, "Letters only please" );
+		//limits name fields to letters only.	
+	 $.validator.addMethod( "lettersonly", function( value, element ) {
+		return this.optional( element ) || /^[a-z]+$/i.test( value );
+	 } );
+  
+	//Validates that state abbrevs are US only.
+  $.validator.addMethod( "stateUS", function( value, element, options ) {
+	var isDefault = typeof options === "undefined",
+		caseSensitive = ( isDefault || typeof options.caseSensitive === "undefined" ) ? false : options.caseSensitive,
+		includeTerritories = ( isDefault || typeof options.includeTerritories === "undefined" ) ? false : options.includeTerritories,
+		includeMilitary = ( isDefault || typeof options.includeMilitary === "undefined" ) ? false : options.includeMilitary,
+		regex;
+
+	if ( !includeTerritories && !includeMilitary ) {
+		regex = "^(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$";
+	} else if ( includeTerritories && includeMilitary ) {
+		regex = "^(A[AEKLPRSZ]|C[AOT]|D[CE]|FL|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEINOPST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$";
+	} else if ( includeTerritories ) {
+		regex = "^(A[KLRSZ]|C[AOT]|D[CE]|FL|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEINOPST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$";
+	} else {
+		regex = "^(A[AEKLPRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$";
+	}
+
+	regex = caseSensitive ? new RegExp( regex ) : new RegExp( regex, "i" );
+	return this.optional( element ) || regex.test( value );
+  } );
+	
+	// Bootstrap tooltips
+    $('label span.glyphicon').tooltip();
   
 }); 
 

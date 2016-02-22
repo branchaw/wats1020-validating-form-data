@@ -105,7 +105,7 @@
               <div class="row">
                 <div class="col-xs-3">
                   <select class="form-control col-sm-2" name="expiry-month" id="expiry-month" required>
-                    <option>Month</option>
+                    <option value="">Month</option>
                     <option value="01">Jan (01)</option>
                     <option value="02">Feb (02)</option>
                     <option value="03">Mar (03)</option>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-xs-3">
                   <select class="form-control" name="expiry-year" required>
-                    <option value="15">2015</option>
+                    <option value="">2015</option>
                     <option value="16">2016</option>
                     <option value="17">2017</option>
                     <option value="18">2018</option>
@@ -135,9 +135,9 @@
                 </div>
               </div>
             </div>
-            <!-- TODO: Make validation for Expiration Date according to these rules:
-                  * Fields must not be blank
-                  -->
+            <!-- Made validation for Expiration Month and Year required 
+                 by changing value of default to value="" and adding required to select -->
+  
           </div>
           <div class="form-group required">
             <label class="col-sm-3 control-label" for="cvv"><span class="glyphicon glyphicon-question-sign" title="Three-digit code from back of card."></span> Card CVV</label>
@@ -154,8 +154,8 @@
             <div class="col-sm-9">
               <div class="row">
                 <div class="col-xs-3">
-                  <select class="form-control col-sm-2" name="shipping-method" id="shipping-method">
-                    <option>Select One</option>
+                  <select class="form-control col-sm-2" name="shipping-method" id="shipping-method" required>
+                    <option value="">Select One</option>
                     <option value="Ground">Ground</option>
                     <option value="Air">Air</option>
                     <option value="Sea">Sea</option>
@@ -165,9 +165,9 @@
                 </div>
               </div>
             </div>
-            <!-- TODO: Make validation for shipping method according to these rules:
-                  * Field must not be blank
-                  -->
+            <!-- Made validation for Shipping Method required 
+                 by changing value of default to value="" and adding required to select -->
+            
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label" for="comments">Special Instructions</label>
